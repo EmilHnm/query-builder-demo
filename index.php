@@ -1,12 +1,8 @@
 <?php
 
-include './src/DB.php';
+// include './src/DB.php';
 include './src/QueryBuilder.php';
-$config = parse_ini_file(__DIR__ . '/config.ini');
 
-$db = new DB($config);
-$db->connect();
-
-$query = new QueryBuilder($db->getConnection());
-
-$query::table('users');
+QueryBuilder::table('users')->where('name', '=', 'John')
+    ->where(2, '=', 2)
+    ->update(['name' => 'John Doe', 'email' => '123@gmail.com']);
