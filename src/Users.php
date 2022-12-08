@@ -1,9 +1,9 @@
 <?php
 
 
-include_once dirname(dirname(__FILE__)) . '/Builder/QueryBuilder.php';
+include_once dirname(__FILE__) . '/Builder/QueryBuilder.php';
 
-use src\QueryBuilder;
+use src\Builder\QueryBuilder;
 
 class Users extends QueryBuilder
 {

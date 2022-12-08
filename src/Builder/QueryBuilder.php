@@ -1,10 +1,8 @@
 <?php
 
-namespace src;
+namespace src\Builder;
 
 include_once 'Connection.php';
-
-
 
 class QueryBuilder
 {
