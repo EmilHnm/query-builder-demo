@@ -1,5 +1,6 @@
 <?php
 
+namespace src;
 
 class Connection
 {
@@ -13,10 +14,10 @@ class Connection
 
     public static function connect()
     {
-        $config = parse_ini_file('config.ini');
+        $config = parse_ini_file(dirname(dirname(dirname(__FILE__))) . '/config.ini');
         $dsn = $config['DB_CONNECTION'] . ":" . "host=" . $config['DB_HOST'] . ";dbname=" . $config['DB_DATABASE'];
         $username = $config['DB_USERNAME'];
         $password = $config['DB_PASSWORD'];
-        return new PDO($dsn, $username, $password);
+        return new \PDO($dsn, $username, $password);
     }
 }
