@@ -1,9 +1,9 @@
 <?php
 
 
-namespace Hoang\Query\Builder;
+namespace Hoangm\Query\Builder;
 
-use Hoang\Query\Connection\Connection;
+use Hoangm\Query\Connection\Connection;
 use PDO;
 
 class QueryBuilder

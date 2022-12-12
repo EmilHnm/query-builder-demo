@@ -1,15 +1,16 @@
 {
-  "name": "hoang/query",
-  "autoload": {
-    "psr-4": {
-      "Hoang\\Query\\": "src/"
-    }
-  },
-  "version": "1.0.0-dev",
-  "authors": [
-    {
-      "name": "Emil"
-    }
-  ],
-  "require": {}
+    "name": "hoangm/query",
+    "autoload": {
+        "psr-4": {
+            "Hoangm\\Query\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Emil",
+            "email": "hoangominh01@gmail.com"
+        }
+    ],
+    "minimum-stability": "beta",
+    "require": {}
 }

@@ -5,7 +5,7 @@ Người thực hiện : [Ngô Minh Hòa](https://github.com/EmilRailgun)
 ## Installation
 
 ```bash
-    composer require "hoang/query"
+    composer require "Hoangm/query"
 ```
 
 ## Configuration
@@ -31,7 +31,7 @@ and customize it
 
        <?php
            require 'vendor/autoload.php';
-           use Hoang\Query\DB;
+           use Hoangm\Query\DB;
            $user = DB::table('users')->get();
 
    ```
@@ -43,7 +43,7 @@ and customize it
      ```php
          <?php
              namespace App\Models;
-             use Hoang\Query\Model;
+             use Hoangm\Query\Model;
 
              class User extends Model
              {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Hoang\Query\Model;
+namespace Hoangm\Query\Model;
 
-use Hoang\Query\Builder\QueryBuilder;
+use Hoangm\Query\Builder\QueryBuilder;
 
 class Model extends QueryBuilder
 {

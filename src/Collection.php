@@ -1,6 +1,6 @@
 <?php
 
-namespace Hoang\Query;
+namespace Hoangm\Query;
 
 class Collection
 {

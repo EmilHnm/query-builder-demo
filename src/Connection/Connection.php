@@ -1,6 +1,6 @@
 <?php
 
-namespace Hoang\Query\Connection;
+namespace Hoangm\Query\Connection;
 
 class Connection
 {

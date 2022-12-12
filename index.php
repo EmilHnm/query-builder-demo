@@ -2,6 +2,6 @@
 
 require 'vendor/autoload.php';
 
-use Hoang\Query\DB;
+use Hoangm\Query\DB;
 
 $user = DB::table('users')->get();
