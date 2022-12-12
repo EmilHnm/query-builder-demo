@@ -11,4 +11,14 @@ class Model extends QueryBuilder
     {
         return (new QueryBuilder(static::$table))->where(static::$primary_key, '=', $id)->first();
     }
+
+    public static function findOne($id)
+    {
+        return (new QueryBuilder(static::$table))->where(static::$primary_key, '=', $id)->first();
+    }
+
+    public static function create($data)
+    {
+        return (new QueryBuilder(static::$table))->insert($data);
+    }
 }
