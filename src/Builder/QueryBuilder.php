@@ -38,10 +38,7 @@ class QueryBuilder
         return (new self(static::$table))->get();
     }
 
-    public static function find($id)
-    {
-        return (new self(static::$table))->where(static::$primary_key, '=', $id)->first();
-    }
+
 
     public static function RAW($sql)
     {
@@ -198,7 +195,6 @@ class QueryBuilder
             $updateData .= "{$key} = '{$value}',";
         }
         $sql = "UPDATE " . static::$table . " SET {$updateData} {$this->where};";
-        echo $sql;
         try {
             //$this->pdo->exec($sql);
         } catch (\PDOException $e) {
@@ -208,8 +204,11 @@ class QueryBuilder
 
     public function get()
     {
-        if (empty(static::$table))
+
+
+        if (empty(static::$table)) {
             throw new \Exception("Table name is not set");
+        }
         if (empty($this->select)) {
             $this->select = "*";
         }
@@ -229,8 +228,9 @@ class QueryBuilder
 
     public function count()
     {
-        if (empty(static::$table))
+        if (empty(static::$table)) {
             throw new \Exception("Table name is not set");
+        }
         if (empty($this->select)) {
             $this->select = "*";
         }
@@ -251,7 +251,7 @@ class QueryBuilder
     public function first()
     {
         $result = $this->get();
-        return $result[0];
+        return $result[0] ?? null;
     }
 
     public function toSql()

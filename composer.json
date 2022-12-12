@@ -5,6 +5,7 @@
       "Hoang\\Query\\": "src/"
     }
   },
+  "version": "1.0.0-dev",
   "authors": [
     {
       "name": "Emil"
