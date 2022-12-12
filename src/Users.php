@@ -1,9 +1,8 @@
 <?php
 
+namespace Hoang\Query;
 
-include_once dirname(__FILE__) . '/Builder/QueryBuilder.php';
-
-use src\Builder\QueryBuilder;
+use Hoang\Query\Builder\QueryBuilder;
 
 class Users extends QueryBuilder
 {

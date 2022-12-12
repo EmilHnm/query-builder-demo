@@ -1,6 +1,6 @@
 <?php
 
-namespace src\Builder;
+namespace Hoang\Query\Connection;
 
 class Connection
 {
@@ -14,7 +14,7 @@ class Connection
 
     public static function connect()
     {
-        $config = parse_ini_file(dirname(dirname(dirname(__FILE__))) . '/config.ini');
+        $config = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/config.ini');
         $dsn = $config['DB_CONNECTION'] . ":" . "host=" . $config['DB_HOST'] . ";dbname=" . $config['DB_DATABASE'];
         $username = $config['DB_USERNAME'];
         $password = $config['DB_PASSWORD'];

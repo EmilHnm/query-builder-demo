@@ -1,0 +1,14 @@
+{
+  "name": "hoang/query",
+  "autoload": {
+    "psr-4": {
+      "Hoang\\Query\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Emil"
+    }
+  ],
+  "require": {}
+}

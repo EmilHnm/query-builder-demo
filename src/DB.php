@@ -1,8 +1,9 @@
 <?php
 
-include_once dirname(__FILE__) . '/Builder/QueryBuilder.php';
+// include_once dirname(__FILE__) . '/Builder/QueryBuilder.php';
+namespace Hoang\Query;
 
-use src\Builder\QueryBuilder;
+use Hoang\Query\Builder\QueryBuilder;
 
 class DB extends QueryBuilder
 {

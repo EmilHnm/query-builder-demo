@@ -1,10 +1,9 @@
 <?php
 
-// include './src/DB.php';
-// include './src/QueryBuilder.php';
-include './src/Users.php';
-include './src/DB.php';
-// $result = QueryBuilder::table('users')::all();
+require 'vendor/autoload.php';
+
+use Hoang\Query\DB;
+use Hoang\Query\Users;
 
 $user = DB::table('users')->get();
 

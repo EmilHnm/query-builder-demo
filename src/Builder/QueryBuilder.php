@@ -1,12 +1,14 @@
 <?php
 
-namespace src\Builder;
 
-include_once 'Connection.php';
+namespace Hoang\Query\Builder;
+
+use Hoang\Query\Connection\Connection;
+use PDO;
 
 class QueryBuilder
 {
-    private $pdo;
+    private PDO $pdo;
     protected static $table = '';
     protected static $primary_key = 'id';
     private $where = '';
