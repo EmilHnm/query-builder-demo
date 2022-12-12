@@ -33,10 +33,7 @@ class QueryBuilder
         return $static;
     }
 
-    public static function all()
-    {
-        return (new self(static::$table))->get();
-    }
+
 
 
 
