@@ -1,16 +1,16 @@
 {
-    "name": "hoangm/query",
-    "autoload": {
-        "psr-4": {
-            "Hoangm\\Query\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Emil",
-            "email": "hoangominh01@gmail.com"
-        }
-    ],
-    "minimum-stability": "beta",
-    "require": {}
+  "name": "hoangm/query",
+  "autoload": {
+    "psr-4": {
+      "Hoangm\\Query\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Emil",
+      "email": "hoangominh01@gmail.com"
+    }
+  ],
+  "minimum-stability": "beta",
+  "require": {}
 }

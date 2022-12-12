@@ -5,7 +5,7 @@ Người thực hiện : [Ngô Minh Hòa](https://github.com/EmilRailgun)
 ## Installation
 
 ```bash
-    composer require "Hoangm/query"
+    composer require "hoangm/query @dev"
 ```
 
 ## Configuration
