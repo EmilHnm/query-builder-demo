@@ -137,8 +137,8 @@ and customize it
 
 - `first()`
 
-      - Get first data
-      - Example: `first()`
+  - Get first data
+  - Example: `first()`
 
 ### Model Builder
 
