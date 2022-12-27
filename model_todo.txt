@@ -1,0 +1,46 @@
+Model creation and update
+
+    DONE new Model: Create a new model instance
+    DONE create(array $attributes = []): Create a new model and save it to the database
+    DONE update(array $attributes = [], array $options = []): Update an existing model and save it to the database
+    fill(array $attributes): Fill the model with an array of attributes
+    DONE save(): Save the model to the database
+    push(): Save the model and all of its relationships to the database
+
+Model querying
+
+    DONE all($columns = ['*']): Fetch all models from the database
+    DONE find($id, $columns = ['*']): Fetch a single model by its primary key
+    DONE findOrFail($id, $columns = ['*']): Fetch a single model by its primary key, or throw an exception if it does not exist
+    DONE first($columns = ['*']): Fetch the first model that matches the given conditions
+    DONE firstOrCreate(array $attributes, array $values = []): Fetch the first model that matches the given conditions, or create a new model if none exists
+    DONE firstOrNew(array $attributes, array $values = []): Fetch the first model that matches the given conditions, or create a new model instance if none exists
+    DONE where($column, $operator = null, $value = null, $boolean = 'and'): Add a WHERE clause to the query
+    DONE orWhere($column, $operator = null, $value = null): Add an OR WHERE clause to the query
+    DONE orderBy($column, $direction = 'asc'): Add an ORDER BY clause to the query
+    with($relations): Eager load the specified relationships
+    DONE get($columns = ['*']): Execute the query and return the results as a collection of models
+
+Model deletion
+
+    DONE delete(): Delete the model from the database
+    DONE destroy($ids): Delete multiple models by their primary keys
+
+Model relationships
+
+    hasOne($related, $foreignKey = null, $localKey = null): Define a one-to-one relationship
+    belongsTo($related, $foreignKey = null, $otherKey = null, $relation = null): Define a one-to-many relationship
+    hasMany($related, $foreignKey = null, $localKey = null): Define a many-to-many relationship
+    belongsToMany($related, $table = null, $foreignPivotKey = null, $relatedPivotKey = null, $parentKey = null, $relatedKey = null, $relation = null): Define a many-to-many relationship
+
+
+Here is a list of some of the static methods available in Eloquent:
+
+    DONE new Model: Create a new model instance
+    DONE create(array $attributes = []): Create a new model and save it to the database
+    DONE find($id, $columns = ['*']): Fetch a single model by its primary key
+    DONE findOrFail($id, $columns = ['*']): Fetch a single model by its primary key, or throw an exception if it does not exist
+    DONE first($columns = ['*']): Fetch the first model that matches the given conditions
+    DONE firstOrCreate(array $attributes, array $values = []): Fetch the first model that matches the given conditions, or create a new model if none exists
+    DONE firstOrNew(array $attributes, array $values = []): Fetch the first model that matches the given conditions, or create a new model instance if none exists
+    DONE destroy($ids): Delete multiple models by their primary keys

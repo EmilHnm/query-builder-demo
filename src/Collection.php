@@ -43,4 +43,9 @@ class Collection
         usort($this->array, $callback);
         return $this->array;
     }
+
+    public function toJson()
+    {
+        return json_encode($this->array);
+    }
 }

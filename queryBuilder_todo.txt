@@ -1,0 +1,53 @@
+    DONE select: Selects a set of columns from the database.
+    DONE where: Adds a WHERE clause to the query.
+    orWhere: Adds an OR WHERE clause to the query.
+    whereIn: Adds a WHERE IN clause to the query.
+    orWhereIn: Adds an OR WHERE IN clause to the query.
+    whereNotIn: Adds a WHERE NOT IN clause to the query.
+    orWhereNotIn: Adds an OR WHERE NOT IN clause to the query.
+    whereNull: Adds a WHERE IS NULL clause to the query.
+    orWhereNull: Adds an OR WHERE IS NULL clause to the query.
+    whereNotNull: Adds a WHERE IS NOT NULL clause to the query.
+    orWhereNotNull: Adds an OR WHERE IS NOT NULL clause to the query.
+    whereBetween: Adds a WHERE BETWEEN clause to the query.
+    whereNotBetween: Adds a WHERE NOT BETWEEN clause to the query.
+    orWhereBetween: Adds an OR WHERE BETWEEN clause to the query.
+    orWhereNotBetween: Adds an OR WHERE NOT BETWEEN clause to the query.
+
+    DONE groupBy: Adds a GROUP BY clause to the query.
+    DONE having: Adds a HAVING clause to the query.
+    orHaving: Adds an OR HAVING clause to the query.
+    orderBy: Adds an ORDER BY clause to the query.
+    latest: Adds an ORDER BY clause to the query and orders the results in descending order by the created_at column.
+    oldest: Adds an ORDER BY clause to the query and orders the results in ascending order by the created_at column.
+    limit: Adds a LIMIT clause to the query.
+    offset: Adds an OFFSET clause to the query.
+    join: Adds a JOIN clause to the query.
+    leftJoin: Adds a LEFT JOIN clause to the query.
+    rightJoin: Adds a RIGHT JOIN clause to the query.
+    crossJoin: Adds a CROSS JOIN clause to the query.
+    union: Adds a UNION clause to the query.
+    unionAll: Adds a UNION ALL clause to the query.
+    insert: Inserts a new record into the database.
+    update: Updates an existing record in the database.
+    delete: Deletes a record from the database.
+    truncate: Truncates a table.
+    count: Returns the number of results.
+    exists: Determines if any records exist that match the given conditions.
+    get: Executes the query and returns the results as an array.
+    first: Executes the query and returns the first result.
+    pluck: Executes the query and returns an array of the values of a single column.
+    chunk: Executes the query and returns the results as an array of
+
+    paginate: Executes the query and returns the results as a paginator object.
+    simplePaginate: Executes the query and returns the results as a simple paginator object.
+    getBindings: Returns the array of values that have been bound to the query.
+    toSql: Returns the raw SQL of the query.
+    find: Executes the query and returns the first result or throws an exception if no result is found.
+    findOrFail: Executes the query and returns the first result or throws a ModelNotFoundException if no result is found.
+    findMany: Executes the query and returns an array of the results or throws an exception if no result is found.
+    findOrNew: Executes the query and returns the first result or a new model instance if no result is found.
+    cursor: Executes the query and returns the results as a cursor.
+    macro: Registers a custom macro with the query builder.
+    getConnection: Returns the database connection used by the query builder.
+    getGrammar: Returns the query grammar used by the query builder.

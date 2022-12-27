@@ -1,6 +1,5 @@
 <?php
 
-// include_once dirname(__FILE__) . '/Builder/QueryBuilder.php';
 namespace Hoangm\Query;
 
 use Hoangm\Query\Builder\QueryBuilder;

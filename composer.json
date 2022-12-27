@@ -1,16 +1,17 @@
 {
-  "name": "hoangm/query",
-  "autoload": {
-    "psr-4": {
-      "Hoangm\\Query\\": "src/"
+    "name": "hoangm/query",
+    "autoload": {
+        "psr-4": {
+            "Hoangm\\Query\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Emil",
+            "email": "hoangominh01@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "symfony/var-dumper": "^6.2"
     }
-  },
-  "authors": [
-    {
-      "name": "Emil",
-      "email": "hoangominh01@gmail.com"
-    }
-  ],
-  "minimum-stability": "beta",
-  "require": {}
 }

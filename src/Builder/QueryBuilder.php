@@ -33,16 +33,12 @@ class QueryBuilder
         return $static;
     }
 
-
-
-
-
     public static function RAW($sql)
     {
         return $sql;
     }
 
-    public function where($column, $operator = null, $value = null)
+    public function where($column, $operator = null, $value = null, $boolean = 'AND')
     {
         if (is_array($column)) {
             foreach ($column as $key => $value) {
@@ -50,7 +46,7 @@ class QueryBuilder
             }
         } else {
             if ($this->where) {
-                $this->where .= " AND {$column} {$operator} '{$value}'";
+                $this->where .= " {$boolean} {$column} {$operator} '{$value}'";
             } else {
                 $this->where .= " WHERE {$column} {$operator} '{$value}'";
             }
@@ -161,7 +157,7 @@ class QueryBuilder
             throw new \Exception("Table name is not set");
         $sql = "DELETE FROM " . static::$table . " {$this->where};";
         try {
-            //$this->pdo->exec($sql);
+            return $this->pdo->exec($sql) ? true : false;
         } catch (\PDOException $e) {
             throw new \Exception($e->getMessage());
         }
@@ -189,11 +185,14 @@ class QueryBuilder
     {
         $updateData = '';
         foreach ($data as $key => $value) {
-            $updateData .= "{$key} = '{$value}',";
+            $updateData .= "{$key} = '{$value}'";
+            if($key !== array_key_last($data))
+                $updateData .= ", ";
         }
         $sql = "UPDATE " . static::$table . " SET {$updateData} {$this->where};";
+        var_dump($sql);
         try {
-            //$this->pdo->exec($sql);
+            return $this->pdo->exec($sql);
         } catch (\PDOException $e) {
             throw new \Exception($e->getMessage());
         }
@@ -201,8 +200,6 @@ class QueryBuilder
 
     public function get()
     {
-
-
         if (empty(static::$table)) {
             throw new \Exception("Table name is not set");
         }
@@ -259,5 +256,9 @@ class QueryBuilder
         return "SELECT {$this->select} FROM "
             . static::$table
             . " {$this->join} {$this->where} {$this->grouping} {$this->having} {$this->order} {$this->limit} {$this->offset};";
+    }
+
+    public function getWhere() {
+        return $this->where;
     }
 }
