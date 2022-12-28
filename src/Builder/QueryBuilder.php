@@ -147,7 +147,7 @@ class QueryBuilder
         try {
             //$this->pdo->exec($sql);
         } catch (\PDOException $e) {
-            throw new \Exception($e->getMessage());
+            throw new \RuntimeException($e->getMessage());
         }
     }
 
@@ -258,7 +258,4 @@ class QueryBuilder
             . " {$this->join} {$this->where} {$this->grouping} {$this->having} {$this->order} {$this->limit} {$this->offset};";
     }
 
-    public function getWhere() {
-        return $this->where;
-    }
 }

@@ -3,18 +3,24 @@
 namespace Hoangm\Query\Model;
 
 use JsonSerializable;
+use Hoangm\Query\Trait\HasAttribute;
+use Hoangm\Query\Trait\HasTimestamps;
 use Hoangm\Query\Builder\QueryBuilder;
+use Hoangm\Query\Trait\HideAttributes;
 use Hoangm\Query\Connection\Connection;
 use Hoangm\Query\Exeptions\ModelNotFoundExeption;
 
-class Model implements JsonSerializable
+abstract class Model implements JsonSerializable
 {
+    use HasAttribute;
+    use HasTimestamps;
+    use HideAttributes;
+
+
     private ?\PDO $pdo;
     private ?QueryBuilder $builder;
     protected bool $exists = false;
-    public array $attributes = [];
-    public bool $timestamps = true;
-    protected array $hidden = [];
+
     protected static string $table = '';
     protected static string $primary_key = 'id';
     protected static ?Model $instance = null;
@@ -27,12 +33,17 @@ class Model implements JsonSerializable
 
     public static function __callStatic($name, $arguments)
     {
-        return (new static)->{$name}(...$arguments); 
+        return (new static)->{"pre".$name}(...$arguments); 
+    }
+
+    public function __call($name, $arguments)
+    {
+        return $this->{"pre".$name}(...$arguments);
     }
     
     // Model creation and update
 
-    public static function create(array $data)
+    public static function precreate(array $data)
     {
         $insertData = '';
 
@@ -45,7 +56,7 @@ class Model implements JsonSerializable
         
         $sql = "INSERT INTO " . static::$table . " ({$columns}) VALUES {$insertData};";
         try {
-            $stmt = (new self)->pdo->prepare($sql);
+            $stmt = (new static)->pdo->prepare($sql);
             $stmt->execute();
             return $stmt->rowCount();
         } catch (\PDOException $e) {
@@ -53,7 +64,7 @@ class Model implements JsonSerializable
         }
     }
 
-    public function update(array $attributes = [], array $options = []) {
+    public function preupdate(array $attributes = [], array $options = []) {
         if (! $this->exists) {
             if(empty($options)) 
                 return $this->builder->update($attributes) ? true : false;
@@ -71,7 +82,6 @@ class Model implements JsonSerializable
                         $sql .= " AND ";
                 }
                 $sql .= ";";
-                var_dump($sql);
                 try {
                     $stmt = $this->pdo->prepare($sql);
                     $stmt->execute();
@@ -101,44 +111,40 @@ class Model implements JsonSerializable
         }
     }
 
-    public function save() {
+    public function presave() {
         if($this->exists) {
             foreach ($this->attributes as $key => $value) {
-                 $data[$key] = $value;
+                $data[$key] = $value;
             }
-             if($this->timestamps) 
-                $data['updated_at'] = date('Y-m-d H:i:s');
+            $this->touch();
             return $this->update($data) ? true : false;
         } else {
             foreach ($this->attributes as $key => $value) {
                 $data[$key] = $value;
             }
-            if($this->timestamps) {
-                $data['created_at'] = date('Y-m-d H:i:s');
-                $data['updated_at'] = date('Y-m-d H:i:s');
-            }
-           static::create($data);
+            $this->touch();
+        static::create($data);
         }
         return true;
     }
 
-    public function push() {
+    public function prepush() {
         // TODO : push data to database
     }
 
-    public function fill(array $data) {
+    public function prefill(array $data) {
         // TODO : fill data to model
     }
 
 
     // Model querying
 
-    public static function all($col = ['*'])
+    public static function preall($col = ['*'])
     {
-        self::isSetTable();
+        static::isSetTable();
          $columns = $col[0] === '*' ? $col[0] : static::$primary_key . ",". implode(',', $col);
         $sql = "SELECT " . $columns . " FROM " . static::$table;
-        $stmt = (new self)->pdo->prepare($sql);
+        $stmt = (new static)->pdo->prepare($sql);
         $stmt->execute();
         $models = [];
         foreach($stmt->fetchAll(\PDO::FETCH_ASSOC) as $data) {
@@ -147,33 +153,33 @@ class Model implements JsonSerializable
         return $models;
     }
 
-    public static function find($id, $col = ['*'])
+    public static function prefind($id, $col = ['*'])
     {
-        self::isSetTable();
+        static::isSetTable();
         $columns = $col[0] === '*' ? $col[0] : static::$primary_key . ",". implode(',', $col);
         $sql = "SELECT ".$columns . " FROM " . static::$table . " WHERE " . static::$primary_key . " = {$id}";
-        $stmt = (new self)->pdo->prepare($sql);
+        $stmt = (new static)->pdo->prepare($sql);
         $stmt->execute();
         $data =  (new static)->createModel($stmt->fetchAll(\PDO::FETCH_ASSOC)[0]?? NULL);
         return $data;
     }
 
-    public static function findOrFail($id, $col = ['*'])
+    public static function prefindOrFail($id, $col = ['*'])
     {
-        self::isSetTable();
-        $data = self::find($id, $col);
+        static::isSetTable();
+        $data = static::find($id, $col);
         if(!$data->attributes) throw 
             (new ModelNotFoundExeption("Model not found"))
             ->setModel(
-                self::$table, $id
+                static::$table, $id
             );
         return $data;
     }
 
-    public static function firstOrCreate(array $attributes, array $values = [])
+    public static function prefirstOrCreate(array $attributes, array $values = [])
     {
-        self::isSetTable();
-        $model = self::where($attributes)->first();
+        static::isSetTable();
+        $model = static::where($attributes)->first();
         if(!$model) {
             $model = (new static)->createModel([...$attributes, ...$values]);
             $model->save();
@@ -181,43 +187,43 @@ class Model implements JsonSerializable
         return $model;
     }
 
-    public static function firstOrNew(array $attributes, array $values = [])
+    public static function prefirstOrNew(array $attributes, array $values = [])
     {
-        self::isSetTable();
-        $model = self::where($attributes)->first();
+        static::isSetTable();
+        $model = static::where($attributes)->first();
         if(!$model) {
             $model = (new static)->createModel([...$attributes, ...$values]);
         }
         return $model;
     }
 
-    private function where($column, $operator = '=', $value = null, $boolean = 'and')
+    public function prewhere($column, $operator = '=', $value = null, $boolean = 'and')
     {
         static::createInstance();
-        self::isSetTable();
-        self::$instance->builder->where($column, $operator, $value, $boolean);
-        return self::$instance;
+        static::isSetTable();
+        static::$instance->builder->where($column, $operator, $value, $boolean);
+        return static::$instance;
     }
 
-    public function orWhere($column, $operator = '=', $value = null)
+    public function preorWhere($column, $operator = '=', $value = null)
     {
         $this->builder->orWhere($column, $operator, $value);
         return $this;
     }
 
-    public function orderBy($column, $direction = 'asc')
+    public function preorderBy($column, $direction = 'asc')
     {
         $this->builder->orderBy($column, $direction);
         return $this;
     }
 
-    public function get($columns = ['*'])
+    public function preget($columns = ['*'])
     {
         static::isSetTable();
-        if(!in_array($columns, [self::$primary_key]) && $columns[0] !== '*') {
-            $columns = [...$columns,self::$primary_key];
+        if(!in_array($columns, [static::$primary_key]) && $columns[0] !== '*') {
+            $columns = [...$columns,static::$primary_key];
         }
-        $data = self::$instance->builder->select(...$columns)->get();
+        $data = static::$instance->builder->select(...$columns)->get();
         $models = [];
         foreach($data as $value) {
             $models[] = (new static)->createModel($value);
@@ -225,27 +231,27 @@ class Model implements JsonSerializable
         return $models;
     }
 
-    public static function first($columns = ['*'])
+    public static function prefirst($columns = ['*'])
     {
         static::createInstance();
-        if(!in_array($columns, [self::$primary_key]) && $columns[0] !== '*') {
-            $columns = [...$columns,self::$primary_key];
+        if(!in_array($columns, [static::$primary_key]) && $columns[0] !== '*') {
+            $columns = [...$columns,static::$primary_key];
         }
-        $data = self::$instance->builder->select(...$columns)->first();
+        $data = static::$instance->builder->select(...$columns)->first();
         return (new static)->createModel($data);
     }
 
     // Model deletion
 
-    public static function destroy($id)
+    public static function predestroy($id)
     {
         $sql = "DELETE FROM " . static::$table . " WHERE " . static::$primary_key . " = {$id}";
-        $stmt = (new self)->pdo->prepare($sql);
+        $stmt = (new static)->pdo->prepare($sql);
         $stmt->execute();
         return $stmt->rowCount() ? true : false;
     }
 
-    public function delete()
+    public function predelete()
     {
         if (static::$instance !== null) {
             return $this->builder->delete();
@@ -254,14 +260,14 @@ class Model implements JsonSerializable
             return false;
         }
         $sql = "DELETE FROM " . static::$table . " WHERE " . static::$primary_key . " = {$this->attributes[static::$primary_key]}";
-        $stmt = (new self)->pdo->prepare($sql);
+        $stmt = (new static)->pdo->prepare($sql);
         $stmt->execute();
         return $stmt->rowCount() ? true : false;
     }
 
     // Model relationships
 
-    public function getKeyName()
+    public function pregetKeyName()
     {
         return $this->primary_key;
     }
@@ -273,27 +279,14 @@ class Model implements JsonSerializable
         return $vars;
     }
 
-    public function __get($name)
-    {
-        if (array_key_exists($name, $this->attributes)) {
-            return $this->attributes[$name];
-        }
-        return null;
-    }
-
-    public function __set($name, $value)
-    {
-        $this->attributes[$name] = $value;
-    }
-
     public function jsonSerialize()
     {
         return $this->attributes;
     }
 
     private static function createInstance() {
-        if (self::$instance == null) {
-            self::$instance = new static();
+        if (static::$instance == null) {
+            static::$instance = new static();
         }
     }
 

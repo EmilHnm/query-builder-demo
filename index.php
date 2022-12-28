@@ -6,7 +6,6 @@ use Hoangm\Query\DB;
 use Hoangm\Query\User;
 // $user = DB::table('users')->get();
 // dd($user);
-$data = User::find(11);
-$data->email = 'test@example.com';
-$data->save();
+$data = User::where('id', '>', 1)->get();
+
 dd($data);
