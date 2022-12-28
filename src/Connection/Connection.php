@@ -12,7 +12,7 @@ class Connection
         $this->connection = self::connect();
     }
 
-    public static function connect($data)
+    public static function connect()
     {
         // $config = parse_ini_file( 'C:/xampp/htdocs/laravel-learn/query-builder-demo/config.ini');
         $config = parse_ini_file( $_SERVER['DOCUMENT_ROOT'] . '/config.ini');
